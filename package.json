@@ -1,0 +1,26 @@
+{
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress"
+  },
+  "author": "Hisham <hhuneidie@gmail.com>",
+  "license": "propietary",
+  "devDependencies": {
+    "@babel/core": "^7.23",
+    "@babel/preset-env": "^7.23",
+    "@symfony/webpack-encore": "^5.0.1",
+    "core-js": "^3.33",
+    "regenerator-runtime": "^0.14",
+    "sass": "^1.83.0",
+    "sass-loader": "^16.0.1",
+    "ts-loader": "^9.0.0",
+    "typescript": "^5.7.2",
+    "webpack": "^5.89",
+    "webpack-cli": "^5.1"
+  },
+  "dependencies": {
+    "document-register-element": "^1.8.1"
+  }
+}

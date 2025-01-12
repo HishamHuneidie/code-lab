@@ -1,0 +1,50 @@
+{% extends 'context/watch/layout/base_watch.html.twig' %}
+
+{% block title %}Rfc list{% endblock %}
+
+{% block body %}
+    <section class="section">
+        <div class="container">
+            <h1>RFCs</h1>
+        </div>
+    </section>
+
+    {% set rfcList_new = rfcs|filter(rfc => rfc.type == 'New Feature') %}
+    {% set rfcList_imp = rfcs|filter(rfc => rfc.type == 'Improvement') %}
+    {% set rfcList_dep = rfcs|filter(rfc => rfc.type == 'Deprecation') %}
+    {% set rfcList_rem = rfcs|filter(rfc => rfc.type == 'Removal') %}
+
+    {{ _self.renderContainer('New features', 'rfc-info', rfcList_new) }}
+    {{ _self.renderContainer('Improvements', 'rfc-sucess', rfcList_imp) }}
+    {{ _self.renderContainer('Deprecations', 'rfc-warning', rfcList_dep) }}
+    {{ _self.renderContainer('Removed', 'rfc-alert', rfcList_rem) }}
+{% endblock %}
+
+{% block modals %}
+    {% include 'context/watch/_partials/modal-php-net-viewer.html.twig' %}
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_script_tags('script/watch/rfc') }}
+{% endblock %}
+
+{% macro renderContainer(title, type, items) %}
+    <section class="section">
+        <div class="container">
+            <h2>{{ title }}</h2>
+        </div>
+        <div class="container container-flex">
+            {% for item in items %}
+                <rfc-item
+                        data-pathname="{{ item.pathname }}"
+                        data-title="{{ item.title }}"
+                        data-type="{{ item.type }}"
+                        data-version="{{ item.version }}"
+                        data-status="{{ item.status }}"
+                        data-php-link="{{ item.phpLink }}"
+                        data-modal-id="#modal-php-net-viewer"
+                >{{ item.title }}</rfc-item>
+            {% endfor %}
+        </div>
+    </section>
+{% endmacro %}

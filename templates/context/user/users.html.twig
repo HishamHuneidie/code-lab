@@ -1,0 +1,31 @@
+{% extends 'context/user/layout/base_user.html.twig' %}
+
+{% block title %}User list{% endblock %}
+
+{% block body %}
+    <section class="section">
+        <div class="container">
+            <h1>Users</h1>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            {% for user in users %}
+                <user-item
+                        data-id="{{ user.id }}"
+                        data-username="{{ user.username }}"
+                        data-email="{{ user.email }}"
+                        data-status="{{ user.status }}"
+                >
+                    {{ user.username }}
+                </user-item>
+                <hr/>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_script_tags('script/user') }}
+{% endblock %}

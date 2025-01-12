@@ -1,0 +1,31 @@
+parameters:
+  locale: en
+
+imports:
+  - { resource: services_ddd.yaml }
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  Hisham\CodeLab\:
+    resource: '../src/'
+    exclude:
+      - '../src/DependencyInjection/'
+      - '../src/Entity/'
+      - '../src/Kernel.php'
+      - '../src/Context/*/Application/UseCase/*/*Query.php'
+      - '../src/Context/*/Application/UseCase/*/*Command.php'
+      - '../src/Context/*/Application/Dto/'
+      - '../src/Component/'
+      - '../src/Common/'
+
+  Symfony\Component\BrowserKit\HttpBrowser:
+    arguments:
+      $client: '@http_client'
+
+  Hisham\CodeLab\Common\Repository\AbstractScrapRepository:
+    abstract: true
+    arguments:
+      - '@Symfony\Component\BrowserKit\HttpBrowser'

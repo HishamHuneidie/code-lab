@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "sourceMap": true,
+    "baseUrl": "./assets/scripts",
+    "paths": {
+      "@common/*": ["common/*"],
+      "@core/*": ["common/core/*"],
+      "@component/*": ["common/component/*"],
+      "@web-component/*": ["common/web-component/*"],
+      "@context/*": ["context/*"],
+      "@shared-context/*": ["context/shared/*"]
+    }
+  },
+  "files": [
+    "./assets/app.ts"
+  ],
+  "include": ["assets/*.ts", "assets/**/*.ts"],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,29 @@
+# Users context
+
+user_api_controllers:
+  resource:
+    path: '../src/Context/User/Api'
+    namespace: Hisham\CodeLab\Context\User\Api
+  type: attribute
+  prefix: /public/v1
+
+user_web_controllers:
+  resource:
+    path: '../src/Context/User/Web'
+    namespace: Hisham\CodeLab\Context\User\Web
+  type: attribute
+
+# RFCs context
+
+rfc_api_controllers:
+  resource:
+    path: '../src/Context/Watch/Api'
+    namespace: Hisham\CodeLab\Context\Watch\Api
+  type: attribute
+  prefix: /public/v1
+
+rfc_web_controllers:
+  resource:
+    path: '../src/Context/Watch/Web'
+    namespace: Hisham\CodeLab\Context\Watch\Web
+  type: attribute

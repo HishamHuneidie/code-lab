@@ -1,0 +1,38 @@
+{% extends 'context/watch/layout/base_watch.html.twig' %}
+
+{% block title %}Version list{% endblock %}
+
+{% block body %}
+    {# Head #}
+    <section class="section">
+        <div class="container">
+            <h1>Versions</h1>
+        </div>
+    </section>
+
+    {# Version list #}
+    <section class="section">
+        <div class="container container-flex">
+            {% for version in versions %}
+                <version-item
+                        data-version-number="{{ version.versionNumber }}"
+                        data-link="{{ version.link }}"
+                        data-status="{{ version.status }}"
+                        data-release-version-number="{{ version.release.versionNumber }}"
+                        data-release-link="{{ version.release.link }}"
+                        data-release-date="{{ version.release.date }}"
+                        data-release-list-link="{{ version.release.listLink }}"
+                >
+                    {{ version.versionNumber }}
+                </version-item>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block modals %}
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_script_tags('script/watch/version') }}
+{% endblock %}

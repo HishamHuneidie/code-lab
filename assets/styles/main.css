@@ -1,0 +1,9 @@
+/* Custom files */
+@import './rules.css';
+@import './scrollbar.css';
+@import './header.css';
+@import './menu.css';
+@import './body.css';
+@import './modals.css';
+@import 'https://site-assets.fontawesome.com/releases/v6.7.2/css/all.css';
+

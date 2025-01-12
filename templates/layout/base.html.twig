@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Code laboratory{% endblock %}</title>
+
+    {# Styles #}
+    {{ encore_entry_link_tags('app') }}
+    {% block css %}{% endblock %}
+
+    {# Scripts #}
+    {{ encore_entry_script_tags('app') }}
+    {% block js %}{% endblock %}
+</head>
+<body>
+<div class="app-container">
+    <div class="app-header"></div>
+    <div class="app-menu">
+        {% block menu %}
+            {% include 'layout/_partials/menu.html.twig' %}
+        {% endblock %}
+    </div>
+    <div class="app-body">
+        {% block body %}{% endblock %}
+    </div>
+
+    {% block modals %}
+    {% endblock %}
+</div>
+</body>
+</html>

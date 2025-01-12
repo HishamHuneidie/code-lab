@@ -1,0 +1,146 @@
+.modal,
+.modal * {
+    transition-property: all;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-out;
+}
+
+.modal {
+    position: fixed;
+    z-index: 1001;
+    padding: 30px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100vw;
+    height: 100vh;
+    background: var(--app-overlay-1);
+    opacity: 0;
+    visibility: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal .modal-window {
+    width: 850px;
+    border-radius: var(--app-radius-1);
+    overflow: hidden;
+    box-shadow: var(--app-menu-shadow);
+    transform: scale(.8) translateX(25%);
+    position: relative;
+    z-index: 1100;
+}
+
+.modal .modal-window .modal-loader {
+    content: '';
+    position: absolute;
+    z-index: 1100;
+    top: var(--app-modal-head-height);
+    left: 0;
+    width: 100%;
+    height: calc(100% - var(--app-modal-head-height));
+    background: var(--app-overlay-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.modal[data-loader=true] .modal-window .modal-loader {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal .modal-window .modal-loader .icon {
+    --size: 50px;
+    font-size: 40px;
+    color: var(--app-background);
+    height: var(--size);
+    line-height: var(--size);
+    width: var(--size);
+    animation: rotateLoader 1s infinite;
+}
+
+.modal.show .modal-window {
+    transform: scale(1) translateX(0);
+}
+
+
+/* ------------------ Head ------------------ */
+/* ------------------ Head ------------------ */
+/* ------------------ Head ------------------ */
+
+
+.modal .modal-window .modal-window-head {
+    height: var(--app-modal-head-height);
+    line-height: var(--app-modal-head-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--app-background-dark);
+    user-select: none;
+}
+
+.modal .modal-window .modal-window-head .modal-window-head-child {
+    display: flex;
+    align-items: center;
+    height: inherit;;
+    line-height: inherit;
+}
+
+.modal .modal-window .modal-window-head .modal-window-head-left {
+    justify-content: flex-start;
+}
+
+.modal .modal-window .modal-window-head .modal-window-head-right {
+    justify-content: flex-end;
+}
+
+.modal .modal-window .modal-window-head .modal-window-head-left p {
+    padding: 0 15px;
+}
+
+
+/* ------------------ Head ------------------ */
+/* ------------------ Head ------------------ */
+/* ------------------ Head ------------------ */
+
+
+.modal .modal-window .modal-window-body {
+    max-height: calc(100vh - 150px);
+    overflow: auto;
+    background: #fff;
+    padding: var(--app-modal-head-padding);
+}
+
+
+/* ------------------ Head ------------------ */
+/* ------------------ Head ------------------ */
+/* ------------------ Head ------------------ */
+
+
+.modal .modal-window .modal-window-footer {
+    background: #e5e5e5;
+    padding: var(--app-modal-head-padding);
+}
+
+
+/* ------------------ Animations ------------------ */
+/* ------------------ Animations ------------------ */
+/* ------------------ Animations ------------------ */
+
+
+@keyframes rotateLoader {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

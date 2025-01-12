@@ -1,0 +1,20 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment files
+/.env.local
+
+# Dependencies directories
+/node_modules/
+/vendor/
+
+# Logs and cache
+*.log
+/public/bundles/
+/var/
+/public/build/
+
+# IDEs settings
+/.vscode/
+/.idea/

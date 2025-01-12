@@ -1,0 +1,28 @@
+{% extends 'context/watch/layout/base_watch.html.twig' %}
+
+{% block title %}Rfc{% endblock %}
+
+{% block body %}
+    <section class="section">
+        <div class="container">
+            <h1>RFC</h1>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <rfc-card
+                    data-pathname="{{ rfc.pathname }}"
+                    data-title="{{ rfc.title }}"
+                    data-type="{{ rfc.type }}"
+                    data-version="{{ rfc.version }}"
+                    data-status="{{ rfc.status }}"
+                    data-php-link="{{ rfc.phpLink }}"
+            >{{ rfc.title }}</rfc-card>
+        </div>
+    </section>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_script_tags('script/watch/rfc') }}
+{% endblock %}

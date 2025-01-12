@@ -1,0 +1,8 @@
+# see https://symfony.com/doc/current/reference/configuration/twig.html
+twig:
+  debug: '%kernel.debug%'
+  strict_variables: true
+  default_path: '%kernel.project_dir%/templates'
+  globals:
+    no_variable_declared: 'No value here'
+  cache: '%kernel.cache_dir%/twig'

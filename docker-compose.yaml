@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  app:
+    build: ${DOCKER_DIR}/app
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - code-lab-net
+  web_server:
+    build: ${DOCKER_DIR}/web_server
+    depends_on:
+      - app
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html:cached
+    networks:
+      - code-lab-net
+  db:
+    image: mariadb:11.6.2
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: code-lab-db
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: 123
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ${DOCKER_DIR}/db/init-database/:/docker-entrypoint-initdb.d/
+    ports:
+      - "3306:3306"
+    networks:
+      - code-lab-net
+
+networks:
+  code-lab-net:
+    driver: bridge
+
+volumes:
+  mariadb_data:

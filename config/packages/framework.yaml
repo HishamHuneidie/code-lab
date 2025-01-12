@@ -1,0 +1,3 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
+framework:
+  ide: 'phpstorm://open?file=%%f&line=%%l&%kernel.project_dir%>%env(IDE_PROJECT_DIR)%/'

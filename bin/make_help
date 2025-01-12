@@ -1,0 +1,114 @@
+#!/usr/bin/env php
+<?php
+
+use HishamHuneidie\ColoredTerminal\BackgroundColor;
+use HishamHuneidie\ColoredTerminal\Printer;
+use HishamHuneidie\ColoredTerminal\TextColor;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$action = $argv[1] ?? null;
+$arguments = array_slice($argv, 2);
+
+/**
+ * Show make help
+ *
+ * @return void
+ */
+function showHelp(): void
+{
+    $allowedCommands = [
+        "build            " => "Build containers and install composer dependencies",
+        "start            " => "Start containers",
+        "restart          " => "Restart containers",
+        "stop             " => "Stop containers",
+        "remove           " => "Remove containers",
+        "logs             " => "Show logs",
+        "bash             " => "Access to the main container terminal",
+        "db-bash          " => "Access to the database container terminal",
+        "composer-clear   " => "Clean cache",
+        "composer-add     " => "Install a vendor package (eg: %purple%make composer-add vendor=my-package%fin%)",
+        "npm-add          " => "Install a npm package (eg: %purple%make npm-add package=my-package%fin%)",
+        "tree             " => "Update/Generate directory tree",
+    ];
+
+    Printer::newText("\nAllowed commands:")
+           ->setColor(TextColor::GREEN)
+           ->print();
+
+    foreach ($allowedCommands as $command => $description) {
+        $description = str_replace(
+            ['%purple%', '%fin%'],
+            [TextColor::PURPLE->value, TextColor::CLOSE->value],
+            $description,
+        );
+
+        $coloredCommand = Printer::newText($command)->setColor(TextColor::PURPLE);
+
+        $printedLine = " {$coloredCommand}: {$description}";
+
+        Printer::newText($printedLine)->print();
+    }
+}
+
+/**
+ * Show error when a make command does not exist
+ *
+ * @param string $command
+ *
+ * @return void
+ */
+function errorCommand(string $command): void
+{
+    Printer::newText("Command '{$command}' not found")
+           ->setColor(TextColor::RED)
+           ->print();
+}
+
+/**
+ * Show a message that informs the server is on
+ *
+ * @return void
+ */
+function hello(): void
+{
+    $textLines = [];
+    $textLines[] = "";
+    $textLines[] = "Application is running!.";
+    $textLines[] = "Practice PHP concepts and best practices with this learning-focused app.";
+    $textLines[] = "";
+    $textLines[] = "Server listening on: http://localhost:8000.";
+    $textLines[] = "";
+
+    $text = implode("\n\t", $textLines);
+
+    Printer::newText($text)
+           ->setColor(TextColor::CYAN)
+           ->print();
+}
+
+function defaultCommand(): void
+{
+    Printer::newText("Warning: You have no chosen any command.")
+           ->setCombination(BackgroundColor::YELLOW, TextColor::BLACK)
+           ->print();
+}
+
+// Execute commands
+
+if ($action === 'help') {
+    showHelp();
+    die;
+}
+
+if ($action === 'errorCommand') {
+    errorCommand($arguments[0]);
+    die;
+}
+
+if ($action === 'hello') {
+    hello();
+    die;
+}
+
+defaultCommand();

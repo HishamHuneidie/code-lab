@@ -1,0 +1,2 @@
+imports:
+  - { resource: ../src/Component/Mapper/DependencyInjection.php, type: php }
