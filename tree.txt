@@ -44,7 +44,10 @@
 |   |-- packages
 |   |   |-- framework.yaml
 |   |   |-- twig.yaml
+|   |   |-- web_profiler.yaml
 |   |   `-- webpack_encore.yaml
+|   |-- routes
+|   |   `-- web_profiler.yaml
 |   |-- routes.yaml
 |   |-- services.yaml
 |   `-- services_ddd.yaml
@@ -168,4 +171,4 @@
 |-- tsconfig.json
 `-- webpack.config.js
 
-72 directories, 96 files
+73 directories, 98 files

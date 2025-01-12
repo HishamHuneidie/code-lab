@@ -39,6 +39,7 @@
     },
     "minimum-stability": "dev",
     "require-dev": {
-        "hishamhuneidie/colored-terminal": "1.*"
+        "hishamhuneidie/colored-terminal": "1.*",
+        "symfony/profiler-pack": "dev-main"
     }
 }

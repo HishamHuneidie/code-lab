@@ -23,10 +23,6 @@ RUN apt-get install -y \
     curl \
     && apt-get clean
 
-ADD config/xdebug.sh /bin/xdebug.sh
-RUN chmod +x /bin/xdebug.sh
-RUN /bin/xdebug.sh
-
 # Configure PHP-FPM
 RUN sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/' /etc/php/8.2/fpm/php.ini
 
@@ -41,6 +37,10 @@ RUN ln -s /usr/bin/php8.2 /etc/alternatives/php
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # Configure Xdebug
+ADD config/xdebug.sh /bin/xdebug.sh
+RUN chmod +x /bin/xdebug.sh
+RUN /bin/xdebug.sh
+
 RUN echo "zend_extension=xdebug.so" >> /etc/php/8.2/fpm/conf.d/20-xdebug.ini && \
     echo "xdebug.mode=debug" >> /etc/php/8.2/fpm/conf.d/20-xdebug.ini && \
     echo "xdebug.start_with_request=yes" >> /etc/php/8.2/fpm/conf.d/20-xdebug.ini && \

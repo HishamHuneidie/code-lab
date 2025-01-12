@@ -25,7 +25,7 @@ services:
     arguments:
       $client: '@http_client'
 
-  Hisham\CodeLab\Common\Repository\AbstractScrapRepository:
+  Hisham\CodeLab\Common\Repository\AbstractWatchScrapRepository:
     abstract: true
     arguments:
       - '@Symfony\Component\BrowserKit\HttpBrowser'
