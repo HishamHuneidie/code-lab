@@ -2,17 +2,17 @@
 
 namespace Hisham\CodeLab\Component\Mapper;
 
-use Hisham\CodeLab\Common\Mapper\MapperException;
+use Exception;
+use Hisham\CodeLab\Common\Mapper\DtoMapperException;
 use Hisham\CodeLab\Context\User\Application\Dto\UserDto;
 use Hisham\CodeLab\Context\User\Domain\Entity\User;
-use Exception;
 
 /**
- * @implements MapperInterface<UserDto, User>
+ * @implements DtoMapperInterface<UserDto, User>
  */
-abstract class AbstractMapper implements MapperInterface
+abstract class AbstractDtoMapper implements DtoMapperInterface
 {
-    protected MapperInterface $mapper;
+    protected DtoMapperInterface $mapper;
 
     /**
      * @inheritDoc
@@ -23,7 +23,7 @@ abstract class AbstractMapper implements MapperInterface
             $entityList = array_map(fn(object $dto) => $this->toEntity($dto), $dtoList);
         } catch (Exception $e) {
             $className = get_class($this);
-            throw new MapperException("Error mapping Dto[] -> Entity[] in {$className}");
+            throw new DtoMapperException("Error mapping Dto[] -> Entity[] in {$className}");
         }
 
         return $entityList;
@@ -38,7 +38,7 @@ abstract class AbstractMapper implements MapperInterface
             $dtoList = array_map(fn(object $entity) => $this->fromEntity($entity), $entityList);
         } catch (Exception $e) {
             $className = get_class($this);
-            throw new MapperException("Error mapping Entity[] -> Dto[] in {$className}");
+            throw new DtoMapperException("Error mapping Entity[] -> Dto[] in {$className}");
         }
 
         return $dtoList;
@@ -47,11 +47,11 @@ abstract class AbstractMapper implements MapperInterface
     /**
      * Set a generic mapper
      *
-     * @param MapperInterface $mapper
+     * @param DtoMapperInterface $mapper
      *
      * @return void
      */
-    public function setGenericMapper(MapperInterface $mapper): void
+    public function setGenericMapper(DtoMapperInterface $mapper): void
     {
         $this->mapper = $mapper;
     }

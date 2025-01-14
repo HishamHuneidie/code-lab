@@ -2,7 +2,7 @@
 
 namespace Hisham\CodeLab;
 
-use Hisham\CodeLab\Component\Symfony\CompilerPass\AutoMapperPass;
+use Hisham\CodeLab\Component\Symfony\CompilerPass\AutoDtoMapperPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
@@ -20,6 +20,6 @@ class Kernel extends BaseKernel
     {
         parent::build($container);
 
-        $container->addCompilerPass(new AutoMapperPass());
+        $container->addCompilerPass(new AutoDtoMapperPass());
     }
 }

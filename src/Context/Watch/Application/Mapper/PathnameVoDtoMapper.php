@@ -2,19 +2,19 @@
 
 namespace Hisham\CodeLab\Context\Watch\Application\Mapper;
 
-use Hisham\CodeLab\Common\Mapper\MapperException;
-use Hisham\CodeLab\Component\Attribute\Mapper;
-use Hisham\CodeLab\Component\Mapper\AbstractMapper;
-use Hisham\CodeLab\Component\Mapper\MapperInterface;
+use Hisham\CodeLab\Common\Mapper\DtoMapperException;
+use Hisham\CodeLab\Component\Attribute\DtoMapper;
+use Hisham\CodeLab\Component\Mapper\AbstractDtoMapper;
+use Hisham\CodeLab\Component\Mapper\DtoMapperInterface;
 use Hisham\CodeLab\Context\Watch\Application\Dto\EscapedPathnameVoDto;
 use Hisham\CodeLab\Context\Watch\Domain\Entity\PathnameVo;
 use Throwable;
 
 /**
- * @implements MapperInterface<EscapedPathnameVoDto, PathnameVo>
+ * @implements DtoMapperInterface<EscapedPathnameVoDto, PathnameVo>
  */
-#[Mapper(EscapedPathnameVoDto::class, PathnameVo::class)]
-final class PathnameVoMapper extends AbstractMapper
+#[DtoMapper(EscapedPathnameVoDto::class, PathnameVo::class)]
+final class PathnameVoDtoMapper extends AbstractDtoMapper
 {
     private const SLASH_ESCAPED = '---';
     private const SLASH_NORMAL  = '/';
@@ -29,7 +29,7 @@ final class PathnameVoMapper extends AbstractMapper
         try {
             $entity = PathnameVo::create($normalPathname);
         } catch (Throwable $e) {
-            throw new MapperException('Error mapping PathnameVoDto -> PathnameVo');
+            throw new DtoMapperException('Error mapping PathnameVoDto -> PathnameVo');
         }
 
         return $entity;
@@ -45,7 +45,7 @@ final class PathnameVoMapper extends AbstractMapper
         try {
             $dto = EscapedPathnameVoDto::create($escapedPathname);
         } catch (Throwable $e) {
-            throw new MapperException('Error mapping PathnameVo -> PathnameVoDto');
+            throw new DtoMapperException('Error mapping PathnameVo -> PathnameVoDto');
         }
 
         return $dto;

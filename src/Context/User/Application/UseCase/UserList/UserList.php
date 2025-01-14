@@ -2,11 +2,11 @@
 
 namespace Hisham\CodeLab\Context\User\Application\UseCase\UserList;
 
-use Hisham\CodeLab\Common\Mapper\MapperException;
+use Hisham\CodeLab\Common\Mapper\DtoMapperException;
 use Hisham\CodeLab\Common\Repository\RepositoryException;
-use Hisham\CodeLab\Component\Mapper\MapperInterface;
+use Hisham\CodeLab\Component\Mapper\DtoMapperInterface;
 use Hisham\CodeLab\Context\User\Application\Dto\UserDto;
-use Hisham\CodeLab\Context\User\Application\Mapper\UserMapper;
+use Hisham\CodeLab\Context\User\Application\Mapper\UserDtoMapper;
 use Hisham\CodeLab\Context\User\Domain\Repository\UserRepositoryInterface;
 use Hisham\CodeLab\Context\User\Infrastructure\Persistence\Repository\UserRepository;
 
@@ -18,16 +18,16 @@ final readonly class UserList
 
     /**
      * @param UserRepository $userRepository
-     * @param UserMapper     $mapper
+     * @param UserDtoMapper  $mapper
      */
     public function __construct(
         private UserRepositoryInterface $userRepository,
-        private MapperInterface         $mapper,
+        private DtoMapperInterface      $mapper,
     ) {}
 
     /**
      * @return UserDto[]
-     * @throws RepositoryException|MapperException
+     * @throws RepositoryException|DtoMapperException
      */
     public function execute(): array
     {

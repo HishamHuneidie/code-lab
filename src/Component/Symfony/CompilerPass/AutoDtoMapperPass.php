@@ -2,16 +2,16 @@
 
 namespace Hisham\CodeLab\Component\Symfony\CompilerPass;
 
-use Hisham\CodeLab\Component\Attribute\Mapper;
-use Hisham\CodeLab\Component\Mapper\AutoMapper;
-use Hisham\CodeLab\Component\Mapper\MapperInterface;
+use Hisham\CodeLab\Component\Attribute\DtoMapper;
+use Hisham\CodeLab\Component\Mapper\AutoDtoMapper;
+use Hisham\CodeLab\Component\Mapper\DtoMapperInterface;
 use ReflectionClass;
 use ReflectionException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
-class AutoMapperPass implements CompilerPassInterface
+class AutoDtoMapperPass implements CompilerPassInterface
 {
     /**
      * @param ContainerBuilder $container
@@ -21,11 +21,11 @@ class AutoMapperPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container): void
     {
-        $genericMapperDefinition = $container->getDefinition(MapperInterface::class);
+        $genericMapperDefinition = $container->getDefinition(DtoMapperInterface::class);
 
         $declaredMappers = array_filter(
             get_declared_classes(),
-            fn(string $className) => in_array(MapperInterface::class, class_implements($className)),
+            fn(string $className) => in_array(DtoMapperInterface::class, class_implements($className)),
         );
 
         $addDefault = function (string $mapperClass) use (&$declaredMappers) {
@@ -34,11 +34,11 @@ class AutoMapperPass implements CompilerPassInterface
             }
         };
 
-        $addDefault(AutoMapper::class);
+        $addDefault(AutoDtoMapper::class);
 
         foreach ($declaredMappers as $declaredMapper) {
             $reflection = new ReflectionClass($declaredMapper);
-            $mapperAttr = $reflection->getAttributes(Mapper::class)[0] ?? null;
+            $mapperAttr = $reflection->getAttributes(DtoMapper::class)[0] ?? null;
 
             // If mapper does not declare mapper attribute, then required to auto-discover
             if (!$mapperAttr) {
@@ -46,7 +46,7 @@ class AutoMapperPass implements CompilerPassInterface
             }
 
             /**
-             * @var Mapper $attrInstance
+             * @var DtoMapper $attrInstance
              */
             $attrInstance = $mapperAttr->newInstance();
             if (!$attrInstance->isValid()) {

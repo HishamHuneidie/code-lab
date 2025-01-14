@@ -11,7 +11,7 @@ use Attribute;
  * Used by DependencyInjection container to discover mappers and its source => target types
  */
 #[Attribute(Attribute::TARGET_CLASS)]
-final readonly class Mapper
+final readonly class DtoMapper
 {
     /**
      * @psalm-param class-string $dto

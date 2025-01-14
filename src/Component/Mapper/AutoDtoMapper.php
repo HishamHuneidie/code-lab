@@ -2,16 +2,16 @@
 
 namespace Hisham\CodeLab\Component\Mapper;
 
-use Hisham\CodeLab\Common\Mapper\MapperException;
-use Hisham\CodeLab\Component\Attribute\Mapper;
+use Hisham\CodeLab\Common\Mapper\DtoMapperException;
+use Hisham\CodeLab\Component\Attribute\DtoMapper;
 use ReflectionClass;
 use ReflectionException;
 
 /**
- * @implements MapperInterface
+ * @implements DtoMapperInterface
  */
-#[Mapper('*', '*')]
-final class AutoMapper extends AbstractMapper
+#[DtoMapper('*', '*')]
+final class AutoDtoMapper extends AbstractDtoMapper
 {
     private array $cachedDtoClasses;
     private array $cachedEntityClasses;
@@ -34,7 +34,7 @@ final class AutoMapper extends AbstractMapper
     {
         $dtoClass = get_class($dto);
         $entityClass = $this->findEntityClass($dtoClass);
-        if (!$entityClass) throw new MapperException(`Cannot find Entity to map '{$dtoClass}'`);
+        if (!$entityClass) throw new DtoMapperException(`Cannot find Entity to map '{$dtoClass}'`);
 
         $entity = (new ReflectionClass($entityClass))->newInstanceWithoutConstructor();
         foreach (get_object_vars($dto) as $propertyName => $propertyValue) {
@@ -54,7 +54,7 @@ final class AutoMapper extends AbstractMapper
     {
         $entityClass = get_class($entity);
         $dtoClass = $this->findDtoClass($entityClass);
-        if (!$dtoClass) throw new MapperException(`Cannot find Dto to map '{$entityClass}'`);
+        if (!$dtoClass) throw new DtoMapperException(`Cannot find Dto to map '{$entityClass}'`);
 
         $dto = (new ReflectionClass($dtoClass))->newInstanceWithoutConstructor();
         $reflectedEntity = new ReflectionClass($entityClass);
@@ -94,7 +94,7 @@ final class AutoMapper extends AbstractMapper
      *
      * @return string|null
      * @throws ReflectionException
-     * @throws MapperException
+     * @throws DtoMapperException
      */
     private function findDtoClass(string $entityClass): ?string
     {
@@ -103,7 +103,7 @@ final class AutoMapper extends AbstractMapper
         }
 
         $context = $this->getContext($entityClass);
-        if (!$context) throw new MapperException(`Cannot find domain of '{$entityClass}'`);
+        if (!$context) throw new DtoMapperException(`Cannot find domain of '{$entityClass}'`);
 
         $shortName = (new ReflectionClass($entityClass))->getShortName();
 
@@ -129,7 +129,7 @@ final class AutoMapper extends AbstractMapper
      *
      * @return string|null
      * @throws ReflectionException
-     * @throws MapperException
+     * @throws DtoMapperException
      */
     private function findEntityClass(string $dtoClass): ?string
     {
@@ -138,7 +138,7 @@ final class AutoMapper extends AbstractMapper
         }
 
         $context = $this->getContext($dtoClass);
-        if (!$context) throw new MapperException(`Cannot find domain of '{$dtoClass}'`);
+        if (!$context) throw new DtoMapperException(`Cannot find domain of '{$dtoClass}'`);
 
         $shortName = (new ReflectionClass($dtoClass))->getShortName();
         if (str_ends_with($shortName, 'Dto')) {

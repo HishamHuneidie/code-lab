@@ -62,9 +62,10 @@
 |   |   |   |-- CommonException.php
 |   |   |   `-- Error.php
 |   |   |-- Mapper
-|   |   |   `-- MapperException.php
+|   |   |   `-- DtoMapperException.php
 |   |   |-- Repository
 |   |   |   |-- AbstractWatchScrapRepository.php
+|   |   |   |-- MariaDB
 |   |   |   `-- RepositoryException.php
 |   |   |-- Util
 |   |   |   |-- EnumTrait.php
@@ -78,16 +79,16 @@
 |   |       `-- ValueObjectInterface.php
 |   |-- Component
 |   |   |-- Attribute
-|   |   |   `-- Mapper.php
+|   |   |   `-- DtoMapper.php
 |   |   |-- Mapper
-|   |   |   |-- AbstractMapper.php
-|   |   |   |-- AutoMapper.php
+|   |   |   |-- AbstractDtoMapper.php
+|   |   |   |-- AutoDtoMapper.php
 |   |   |   |-- DependencyInjection.php
-|   |   |   |-- GenericMapper.php
-|   |   |   `-- MapperInterface.php
+|   |   |   |-- DtoMapperInterface.php
+|   |   |   `-- GenericDtoMapper.php
 |   |   `-- Symfony
 |   |       `-- CompilerPass
-|   |           `-- AutoMapperPass.php
+|   |           `-- AutoDtoMapperPass.php
 |   |-- Context
 |   |   |-- User
 |   |   |   |-- Api
@@ -95,7 +96,7 @@
 |   |   |   |   |-- Dto
 |   |   |   |   |   `-- UserDto.php
 |   |   |   |   |-- Mapper
-|   |   |   |   |   `-- UserMapper.php
+|   |   |   |   |   `-- UserDtoMapper.php
 |   |   |   |   `-- UseCase
 |   |   |   |       |-- SaveUser
 |   |   |   |       |-- UserById
@@ -121,9 +122,9 @@
 |   |       |   |   |-- RfcDto.php
 |   |       |   |   `-- VersionDto.php
 |   |       |   |-- Mapper
-|   |       |   |   |-- PathnameVoMapper.php
-|   |       |   |   |-- RfcMapper.php
-|   |       |   |   `-- VersionMapper.php
+|   |       |   |   |-- PathnameVoDtoMapper.php
+|   |       |   |   |-- RfcDtoMapper.php
+|   |       |   |   `-- VersionDtoMapper.php
 |   |       |   `-- UseCase
 |   |       |       |-- GetRfcByPathname
 |   |       |       |-- GetRfcList
@@ -147,6 +148,7 @@
 |-- templates
 |   |-- context
 |   |   |-- user
+|   |   |   |-- _partials
 |   |   |   |-- layout
 |   |   |   |   |-- _partials
 |   |   |   |   |   `-- menu.html.twig
@@ -171,4 +173,4 @@
 |-- tsconfig.json
 `-- webpack.config.js
 
-73 directories, 98 files
+75 directories, 98 files

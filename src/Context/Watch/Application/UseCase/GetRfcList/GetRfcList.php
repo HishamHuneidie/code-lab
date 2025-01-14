@@ -2,11 +2,11 @@
 
 namespace Hisham\CodeLab\Context\Watch\Application\UseCase\GetRfcList;
 
-use Hisham\CodeLab\Common\Mapper\MapperException;
+use Hisham\CodeLab\Common\Mapper\DtoMapperException;
 use Hisham\CodeLab\Common\Repository\RepositoryException;
-use Hisham\CodeLab\Component\Mapper\MapperInterface;
+use Hisham\CodeLab\Component\Mapper\DtoMapperInterface;
 use Hisham\CodeLab\Context\Watch\Application\Dto\RfcDto;
-use Hisham\CodeLab\Context\Watch\Application\Mapper\RfcMapper;
+use Hisham\CodeLab\Context\Watch\Application\Mapper\RfcDtoMapper;
 use Hisham\CodeLab\Context\Watch\Domain\Repository\RfcRepositoryInterface;
 use Hisham\CodeLab\Context\Watch\Infrastructure\Persistence\Repository\RfcRepository;
 
@@ -14,16 +14,16 @@ final readonly class GetRfcList
 {
     /**
      * @param RfcRepository $repository
-     * @param RfcMapper     $mapper
+     * @param RfcDtoMapper  $mapper
      */
     public function __construct(
         private RfcRepositoryInterface $repository,
-        private MapperInterface        $mapper,
+        private DtoMapperInterface     $mapper,
     ) {}
 
     /**
      * @return RfcDto[]
-     * @throws RepositoryException|MapperException
+     * @throws RepositoryException|DtoMapperException
      */
     public function execute(): array
     {

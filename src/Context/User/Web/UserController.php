@@ -2,7 +2,7 @@
 
 namespace Hisham\CodeLab\Context\User\Web;
 
-use Hisham\CodeLab\Common\Mapper\MapperException;
+use Hisham\CodeLab\Common\Mapper\DtoMapperException;
 use Hisham\CodeLab\Common\Repository\RepositoryException;
 use Hisham\CodeLab\Common\ValueObject\ValueObjectException;
 use Hisham\CodeLab\Context\User\Application\UseCase\SaveUser\SaveUser;
@@ -26,7 +26,7 @@ final class UserController extends AbstractController
             return $this->json(['errors repository']);
         } catch (ValueObjectException $e) {
             return $this->json(['errors value object']);
-        } catch (MapperException $e) {
+        } catch (DtoMapperException $e) {
             return $this->json(['errors mapper']);
         }
 
@@ -44,7 +44,7 @@ final class UserController extends AbstractController
             return $this->json(['errors repository']);
         } catch (ValueObjectException $e) {
             return $this->json(['errors value object']);
-        } catch (MapperException $e) {
+        } catch (DtoMapperException $e) {
             return $this->json(['errors mapper']);
         }
 
@@ -67,7 +67,7 @@ final class UserController extends AbstractController
             return $this->json(['errors repository']);
         } catch (ValueObjectException $e) {
             return $this->json(['errors value object']);
-        } catch (MapperException $e) {
+        } catch (DtoMapperException $e) {
             return $this->json(['errors mapper']);
         }
 

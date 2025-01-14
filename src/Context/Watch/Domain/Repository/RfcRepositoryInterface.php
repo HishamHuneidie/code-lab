@@ -2,7 +2,7 @@
 
 namespace Hisham\CodeLab\Context\Watch\Domain\Repository;
 
-use Hisham\CodeLab\Common\Mapper\MapperException;
+use Hisham\CodeLab\Common\Mapper\DtoMapperException;
 use Hisham\CodeLab\Common\Repository\RepositoryException;
 use Hisham\CodeLab\Context\Watch\Domain\Entity\PathnameVo;
 use Hisham\CodeLab\Context\Watch\Domain\Entity\Rfc;
@@ -13,7 +13,7 @@ interface RfcRepositoryInterface
      * Searches a list of RFCs
      *
      * @return Rfc[]
-     * @throws RepositoryException|MapperException
+     * @throws RepositoryException|DtoMapperException
      */
     public function find(): array;
 
@@ -24,7 +24,7 @@ interface RfcRepositoryInterface
      *
      * @return Rfc
      * @throws RepositoryException
-     * @throws MapperException
+     * @throws DtoMapperException
      */
     public function findByPathname(PathnameVo $pathnameVo): Rfc;
 

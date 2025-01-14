@@ -2,12 +2,12 @@
 
 namespace Hisham\CodeLab\Context\User\Application\UseCase\SaveUser;
 
-use Hisham\CodeLab\Common\Mapper\MapperException;
+use Hisham\CodeLab\Common\Mapper\DtoMapperException;
 use Hisham\CodeLab\Common\Repository\RepositoryException;
 use Hisham\CodeLab\Common\ValueObject\IdVo;
 use Hisham\CodeLab\Common\ValueObject\ValueObjectException;
-use Hisham\CodeLab\Component\Mapper\MapperInterface;
-use Hisham\CodeLab\Context\User\Application\Mapper\UserMapper;
+use Hisham\CodeLab\Component\Mapper\DtoMapperInterface;
+use Hisham\CodeLab\Context\User\Application\Mapper\UserDtoMapper;
 use Hisham\CodeLab\Context\User\Domain\Repository\UserRepositoryInterface;
 use Hisham\CodeLab\Context\User\Infrastructure\Persistence\Repository\UserRepository;
 
@@ -18,18 +18,18 @@ final readonly class SaveUser
 {
     /**
      * @param UserRepository $repository
-     * @param UserMapper     $mapper
+     * @param UserDtoMapper  $mapper
      */
     public function __construct(
         private UserRepositoryInterface $repository,
-        private MapperInterface         $mapper,
+        private DtoMapperInterface      $mapper,
     ) {}
 
     /**
      * @param SaveUserCommand $command
      *
      * @return void
-     * @throws MapperException|RepositoryException|ValueObjectException
+     * @throws DtoMapperException|RepositoryException|ValueObjectException
      */
     public function execute(SaveUserCommand $command): void
     {

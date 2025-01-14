@@ -2,23 +2,23 @@
 
 namespace Hisham\CodeLab\Context\User\Application\Mapper;
 
-use Hisham\CodeLab\Common\Mapper\MapperException;
+use DateTime;
+use Hisham\CodeLab\Common\Mapper\DtoMapperException;
 use Hisham\CodeLab\Common\Util\GlobalConfig;
 use Hisham\CodeLab\Common\ValueObject\IdVo;
-use Hisham\CodeLab\Component\Attribute\Mapper;
-use Hisham\CodeLab\Component\Mapper\AbstractMapper;
-use Hisham\CodeLab\Component\Mapper\MapperInterface;
+use Hisham\CodeLab\Component\Attribute\DtoMapper;
+use Hisham\CodeLab\Component\Mapper\AbstractDtoMapper;
+use Hisham\CodeLab\Component\Mapper\DtoMapperInterface;
 use Hisham\CodeLab\Context\User\Application\Dto\UserDto;
 use Hisham\CodeLab\Context\User\Domain\Entity\User;
 use Hisham\CodeLab\Context\User\Domain\Entity\UserStatus;
-use DateTime;
 use Throwable;
 
 /**
- * @implements MapperInterface<UserDto, User>
+ * @implements DtoMapperInterface<UserDto, User>
  */
-#[Mapper(UserDto::class, User::class)]
-final class UserMapper extends AbstractMapper
+#[DtoMapper(UserDto::class, User::class)]
+final class UserDtoMapper extends AbstractDtoMapper
 {
     /**
      * @inheritDoc
@@ -35,7 +35,7 @@ final class UserMapper extends AbstractMapper
                 createdAt: new DateTime($dto->createdAt),
             );
         } catch (Throwable $e) {
-            throw new MapperException('Error mapping UserDto -> User');
+            throw new DtoMapperException('Error mapping UserDto -> User');
         }
 
         return $entity;
@@ -56,7 +56,7 @@ final class UserMapper extends AbstractMapper
                 createdAt: $entity->getCreatedAt()->format(GlobalConfig::DATE_FORMAT_DEFAULT),
             );
         } catch (Throwable $e) {
-            throw new MapperException('Error mapping User -> UserDto');
+            throw new DtoMapperException('Error mapping User -> UserDto');
         }
 
         return $dto;

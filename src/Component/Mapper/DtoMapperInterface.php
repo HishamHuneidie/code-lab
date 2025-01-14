@@ -2,7 +2,7 @@
 
 namespace Hisham\CodeLab\Component\Mapper;
 
-use Hisham\CodeLab\Common\Mapper\MapperException;
+use Hisham\CodeLab\Common\Mapper\DtoMapperException;
 
 /**
  * Contract for objects that map Dto and entities
@@ -10,14 +10,14 @@ use Hisham\CodeLab\Common\Mapper\MapperException;
  * @psalm-template TDto of object
  * @psalm-template TEntity of object
  */
-interface MapperInterface
+interface DtoMapperInterface
 {
     /**
      * Create an entity from a Dto
      *
      * @psalm-param TDto $dto
      * @psalm-return TEntity
-     * @throws MapperException
+     * @throws DtoMapperException
      */
     public function toEntity(object $dto): object;
 
@@ -26,7 +26,7 @@ interface MapperInterface
      *
      * @psalm-param TEntity $entity
      * @psalm-return TDto
-     * @throws MapperException
+     * @throws DtoMapperException
      */
     public function fromEntity(object $entity): object;
 
@@ -35,7 +35,7 @@ interface MapperInterface
      *
      * @psalm-param TDto[] $dto
      * @psalm-return TEntity[]
-     * @throws MapperException
+     * @throws DtoMapperException
      */
     public function toEntityList(array $dtoList): array;
 
@@ -44,7 +44,7 @@ interface MapperInterface
      *
      * @psalm-param TEntity[] $entity
      * @psalm-return TDto[]
-     * @throws MapperException
+     * @throws DtoMapperException
      */
     public function fromEntityList(array $entityList): array;
 }

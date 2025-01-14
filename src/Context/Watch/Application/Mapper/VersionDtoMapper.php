@@ -2,10 +2,10 @@
 
 namespace Hisham\CodeLab\Context\Watch\Application\Mapper;
 
-use Hisham\CodeLab\Common\Mapper\MapperException;
-use Hisham\CodeLab\Component\Attribute\Mapper;
-use Hisham\CodeLab\Component\Mapper\AbstractMapper;
-use Hisham\CodeLab\Component\Mapper\MapperInterface;
+use Hisham\CodeLab\Common\Mapper\DtoMapperException;
+use Hisham\CodeLab\Component\Attribute\DtoMapper;
+use Hisham\CodeLab\Component\Mapper\AbstractDtoMapper;
+use Hisham\CodeLab\Component\Mapper\DtoMapperInterface;
 use Hisham\CodeLab\Context\Watch\Application\Dto\ReleaseVoDto;
 use Hisham\CodeLab\Context\Watch\Application\Dto\VersionDto;
 use Hisham\CodeLab\Context\Watch\Domain\Entity\ReleaseVo;
@@ -13,10 +13,10 @@ use Hisham\CodeLab\Context\Watch\Domain\Entity\Version;
 use Throwable;
 
 /**
- * @implements MapperInterface<VersionDto, Version>
+ * @implements DtoMapperInterface<VersionDto, Version>
  */
-#[Mapper(VersionDto::class, Version::class)]
-class VersionMapper extends AbstractMapper
+#[DtoMapper(VersionDto::class, Version::class)]
+class VersionDtoMapper extends AbstractDtoMapper
 {
     /**
      * @inheritDoc
@@ -36,7 +36,7 @@ class VersionMapper extends AbstractMapper
                 ),
             );
         } catch (Throwable $e) {
-            throw new MapperException('Error mapping VersionDto -> Version');
+            throw new DtoMapperException('Error mapping VersionDto -> Version');
         }
 
         return $entity;
@@ -60,7 +60,7 @@ class VersionMapper extends AbstractMapper
                 ),
             );
         } catch (Throwable $e) {
-            throw new MapperException('Error mapping Version -> VersionDto');
+            throw new DtoMapperException('Error mapping Version -> VersionDto');
         }
 
         return $dto;

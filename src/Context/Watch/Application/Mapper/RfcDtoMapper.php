@@ -2,19 +2,19 @@
 
 namespace Hisham\CodeLab\Context\Watch\Application\Mapper;
 
-use Hisham\CodeLab\Common\Mapper\MapperException;
-use Hisham\CodeLab\Component\Attribute\Mapper;
-use Hisham\CodeLab\Component\Mapper\AbstractMapper;
-use Hisham\CodeLab\Component\Mapper\MapperInterface;
+use Hisham\CodeLab\Common\Mapper\DtoMapperException;
+use Hisham\CodeLab\Component\Attribute\DtoMapper;
+use Hisham\CodeLab\Component\Mapper\AbstractDtoMapper;
+use Hisham\CodeLab\Component\Mapper\DtoMapperInterface;
 use Hisham\CodeLab\Context\Watch\Application\Dto\RfcDto;
 use Hisham\CodeLab\Context\Watch\Domain\Entity\Rfc;
 use Throwable;
 
 /**
- * @implements MapperInterface<RfcDto, Rfc>
+ * @implements DtoMapperInterface<RfcDto, Rfc>
  */
-#[Mapper(RfcDto::class, Rfc::class)]
-final class RfcMapper extends AbstractMapper
+#[DtoMapper(RfcDto::class, Rfc::class)]
+final class RfcDtoMapper extends AbstractDtoMapper
 {
     /**
      * @inheritDoc
@@ -31,7 +31,7 @@ final class RfcMapper extends AbstractMapper
                 phpLink : $dto->phpLink,
             );
         } catch (Throwable $e) {
-            throw new MapperException('Error mapping RfcDto -> Rfc');
+            throw new DtoMapperException('Error mapping RfcDto -> Rfc');
         }
 
         return $entity;
@@ -52,7 +52,7 @@ final class RfcMapper extends AbstractMapper
                 phpLink : $entity->getPhpLink(),
             );
         } catch (Throwable $e) {
-            throw new MapperException('Error mapping Rfc -> RfcDto');
+            throw new DtoMapperException('Error mapping Rfc -> RfcDto');
         }
 
         return $dto;

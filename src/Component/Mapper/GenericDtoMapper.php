@@ -2,14 +2,14 @@
 
 namespace Hisham\CodeLab\Component\Mapper;
 
-use Hisham\CodeLab\Common\Mapper\MapperException;
+use Hisham\CodeLab\Common\Mapper\DtoMapperException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
 
-class GenericMapper implements MapperInterface
+class GenericDtoMapper implements DtoMapperInterface
 {
     /**
-     * @var MapperInterface[]
+     * @var DtoMapperInterface[]
      */
     private array $mappers = [];
 
@@ -23,9 +23,9 @@ class GenericMapper implements MapperInterface
      */
     public function toEntity(object $dto): object
     {
-        $this->stopwatch->start(MapperInterface::class);
+        $this->stopwatch->start(DtoMapperInterface::class);
         $entity = $this->resolve($dto)->toEntity($dto);
-        $this->stopwatch->stop(MapperInterface::class);
+        $this->stopwatch->stop(DtoMapperInterface::class);
 
         return $entity;
     }
@@ -35,9 +35,9 @@ class GenericMapper implements MapperInterface
      */
     public function fromEntity(object $entity): object
     {
-        $this->stopwatch->start(MapperInterface::class);
+        $this->stopwatch->start(DtoMapperInterface::class);
         $dto = $this->resolve($entity)->fromEntity($entity);
-        $this->stopwatch->stop(MapperInterface::class);
+        $this->stopwatch->stop(DtoMapperInterface::class);
 
         return $dto;
     }
@@ -51,7 +51,7 @@ class GenericMapper implements MapperInterface
             return [];
         }
 
-        $this->stopwatch->start(MapperInterface::class);
+        $this->stopwatch->start(DtoMapperInterface::class);
 
         $mapper = $this->resolve($dtoList[0]);
         $entityList = array_map(
@@ -59,7 +59,7 @@ class GenericMapper implements MapperInterface
             $dtoList,
         );
 
-        $this->stopwatch->stop(MapperInterface::class);
+        $this->stopwatch->stop(DtoMapperInterface::class);
 
         return $entityList;
     }
@@ -73,7 +73,7 @@ class GenericMapper implements MapperInterface
             return [];
         }
 
-        $this->stopwatch->start(MapperInterface::class);
+        $this->stopwatch->start(DtoMapperInterface::class);
 
         $mapper = $this->resolve($entityList[0]);
         $dtoList = array_map(
@@ -81,7 +81,7 @@ class GenericMapper implements MapperInterface
             $entityList,
         );
 
-        $this->stopwatch->stop(MapperInterface::class);
+        $this->stopwatch->stop(DtoMapperInterface::class);
 
         return $dtoList;
     }
@@ -91,16 +91,16 @@ class GenericMapper implements MapperInterface
      *
      * @param object $object
      *
-     * @return MapperInterface
-     * @throws MapperException
+     * @return DtoMapperInterface
+     * @throws DtoMapperException
      */
-    private function resolve(object $object): MapperInterface
+    private function resolve(object $object): DtoMapperInterface
     {
         $class = get_class($object);
         $mapper = $this->mappers[$class] ?? $this->mappers['*'] ?? null;
 
         if (!$mapper) {
-            throw new MapperException("No mapper found for {$class}");
+            throw new DtoMapperException("No mapper found for {$class}");
         }
 
         $this->logger->debug(
@@ -114,14 +114,14 @@ class GenericMapper implements MapperInterface
      * Add a mapper for a specific Dto or Entity
      * This method is called by one CompilerPass
      *
-     * @param string          $objectClass
-     * @param MapperInterface $mapper
+     * @param string             $objectClass
+     * @param DtoMapperInterface $mapper
      *
      * @return $this
      */
-    public function addMapper(string $objectClass, MapperInterface $mapper): self
+    public function addMapper(string $objectClass, DtoMapperInterface $mapper): self
     {
-        if ($mapper instanceof AbstractMapper) {
+        if ($mapper instanceof AbstractDtoMapper) {
             $mapper->setGenericMapper($this);
         }
 

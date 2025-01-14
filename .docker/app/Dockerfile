@@ -36,6 +36,10 @@ RUN ln -s /usr/bin/php8.2 /etc/alternatives/php
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
+# Enable extensions
+RUN sed 's/;extension=pdo_mysql/extension=pdo_mysql/' /etc/php/8.2/fpm/php.ini
+RUN sed 's/;extension=pdo_mysql/extension=pdo_mysql/' /etc/php/8.2/cli/php.ini
+
 # Configure Xdebug
 ADD config/xdebug.sh /bin/xdebug.sh
 RUN chmod +x /bin/xdebug.sh
