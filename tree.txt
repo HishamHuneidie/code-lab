@@ -57,7 +57,8 @@
 |-- src
 |   |-- Common
 |   |   |-- Enum
-|   |   |   `-- HttpMethod.php
+|   |   |   |-- HttpMethod.php
+|   |   |   `-- MariaDbTable.php
 |   |   |-- Exception
 |   |   |   |-- CommonException.php
 |   |   |   `-- Error.php
@@ -66,17 +67,29 @@
 |   |   |-- Repository
 |   |   |   |-- AbstractWatchScrapRepository.php
 |   |   |   |-- MariaDB
+|   |   |   |   |-- AbstractMariaDbRepository.php
+|   |   |   |   |-- AbstractSqlBuilder.php
+|   |   |   |   |-- CommandBuilder.php
+|   |   |   |   |-- MariaDbException.php
+|   |   |   |   |-- QueryBuilder.php
+|   |   |   |   `-- SqlResult.php
+|   |   |   |-- QueryCondition.php
 |   |   |   `-- RepositoryException.php
 |   |   |-- Util
 |   |   |   |-- EnumTrait.php
 |   |   |   |-- GetterSetterTrait.php
 |   |   |   |-- GlobalConfig.php
 |   |   |   `-- UuidService.php
-|   |   `-- ValueObject
-|   |       |-- AbstractValueObject.php
-|   |       |-- IdVo.php
-|   |       |-- ValueObjectException.php
-|   |       `-- ValueObjectInterface.php
+|   |   |-- ValueObject
+|   |   |   |-- AbstractValueObject.php
+|   |   |   |-- IdVo.php
+|   |   |   |-- ValueObjectException.php
+|   |   |   `-- ValueObjectInterface.php
+|   |   `-- Wrapper
+|   |       |-- AbstractWrapper.php
+|   |       |-- ArrayWrapper.php
+|   |       |-- AssociativeArrayWrapper.php
+|   |       `-- IndexedArrayWrapper.php
 |   |-- Component
 |   |   |-- Attribute
 |   |   |   `-- DtoMapper.php
@@ -149,6 +162,7 @@
 |   |-- context
 |   |   |-- user
 |   |   |   |-- _partials
+|   |   |   |   `-- modal-user-viewer.html.twig
 |   |   |   |-- layout
 |   |   |   |   |-- _partials
 |   |   |   |   |   `-- menu.html.twig
@@ -173,4 +187,4 @@
 |-- tsconfig.json
 `-- webpack.config.js
 
-75 directories, 98 files
+76 directories, 111 files
