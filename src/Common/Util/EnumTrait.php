@@ -23,4 +23,5 @@ trait EnumTrait
         $validOptions = array_map(fn(self $status) => $status->value, self::cases());
         return implode(', ', $validOptions);
     }
+
 }

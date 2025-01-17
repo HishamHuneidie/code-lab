@@ -66,14 +66,6 @@
 |   |   |   `-- DtoMapperException.php
 |   |   |-- Repository
 |   |   |   |-- AbstractWatchScrapRepository.php
-|   |   |   |-- MariaDB
-|   |   |   |   |-- AbstractMariaDbRepository.php
-|   |   |   |   |-- AbstractSqlBuilder.php
-|   |   |   |   |-- CommandBuilder.php
-|   |   |   |   |-- MariaDbException.php
-|   |   |   |   |-- QueryBuilder.php
-|   |   |   |   `-- SqlResult.php
-|   |   |   |-- QueryCondition.php
 |   |   |   `-- RepositoryException.php
 |   |   |-- Util
 |   |   |   |-- EnumTrait.php
@@ -99,6 +91,14 @@
 |   |   |   |-- DependencyInjection.php
 |   |   |   |-- DtoMapperInterface.php
 |   |   |   `-- GenericDtoMapper.php
+|   |   |-- Repository
+|   |   |   `-- MariaDB
+|   |   |       |-- AbstractMariaDbRepository.php
+|   |   |       |-- AbstractSqlBuilder.php
+|   |   |       |-- CommandBuilder.php
+|   |   |       |-- MariaDbException.php
+|   |   |       |-- QueryBuilder.php
+|   |   |       `-- QueryCondition.php
 |   |   `-- Symfony
 |   |       `-- CompilerPass
 |   |           `-- AutoDtoMapperPass.php
@@ -187,4 +187,4 @@
 |-- tsconfig.json
 `-- webpack.config.js
 
-76 directories, 111 files
+77 directories, 110 files

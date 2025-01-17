@@ -29,3 +29,14 @@ services:
     abstract: true
     arguments:
       - '@Symfony\Component\BrowserKit\HttpBrowser'
+
+  db_connection:
+    class: PDO
+    arguments:
+      - 'mysql:host=db;dbname=code-lab-db;charset=utf8'
+      - 'root'
+      - '123'
+    calls:
+      - [ setAttribute, [ 3, 2 ] ]
+  PDO:
+    alias: db_connection
