@@ -19,6 +19,8 @@
     --app-font-size: 16px;
     --app-font-color: rgba(255, 255, 255, 0.8);
     --app-font-color-80perc: rgba(255, 255, 255, 0.6);
+    --app-font-dark-color: rgba(0, 0, 0, 0.8);
+    --app-font-dark-color-80perc: rgba(0, 0, 0, 0.8);
     /* Header */
     --app-header-height: 60px;
     /* Menu */
@@ -59,7 +61,7 @@ html {
 body {
     width: 100vw;
     height: 100vh;
-    overflow:hidden;
+    overflow: hidden;
     font-size: 1rem;
     line-height: 1.6;
 }
