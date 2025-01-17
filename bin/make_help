@@ -10,6 +10,44 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $action = $argv[1] ?? null;
 $arguments = array_slice($argv, 2);
 
+function createTable(array $table): string
+{
+    // Obtain columns max length
+    $lengths = [];
+    foreach ($table as $row) {
+        foreach ($row as $key => $value) {
+            $lengths[$key] = max($lengths[$key] ?? 0, strlen($value));
+        }
+    }
+
+    // Fill width spaces the smallest columns
+    foreach ($table as $i => $row) {
+        foreach ($row as $key => $value) {
+            $long = $lengths[$key];
+            $table[$i][$key] = str_pad($value, $long, ' ', STR_PAD_RIGHT);
+        }
+    }
+
+    // Split columns
+    $lines = [];
+    foreach ($table as $row) {
+        $lines[] = "| " . implode(' | ', $row) . " |";
+    }
+
+    $top = str_pad("", strlen($lines[0]), '-', STR_PAD_RIGHT);
+    array_unshift($lines, $top);
+    $lines[] = $top;
+
+    // Add header and footer
+    $result = [];
+    foreach ($lines as $i => $line) {
+        if ($i === 2) $result[] = $top;
+        $result[] = $line;
+    }
+
+    return implode("\n", $result);
+}
+
 /**
  * Show make help
  *
@@ -21,13 +59,14 @@ function showHelp(): void
         "build            " => "Build containers and install composer dependencies",
         "start            " => "Start containers",
         "restart          " => "Restart containers",
+        "status           " => "Show containers status",
         "stop             " => "Stop containers",
         "remove           " => "Remove containers",
         "logs             " => "Show logs",
         "bash             " => "Access to the main container terminal",
         "db-bash          " => "Access to the database container terminal",
-        "composer-clear   " => "Clean cache",
-        "composer-add     " => "Install a vendor package (eg: %purple%make composer-add vendor=my-package%fin%)",
+        "composer-clear   " => "Clear cache",
+        "composer-add     " => "Install a composer package (eg: %purple%make composer-add vendor=my-package%fin%)",
         "npm-add          " => "Install a npm package (eg: %purple%make npm-add package=my-package%fin%)",
         "tree             " => "Update/Generate directory tree",
     ];
@@ -87,6 +126,55 @@ function hello(): void
            ->print();
 }
 
+/**
+ * Shows containers status
+ *
+ * @param string $dockerPrefix
+ *
+ * @return void
+ */
+function status(string $dockerPrefix): void
+{
+    $delimiter = 'SPACE';
+    $command = sprintf('docker compose -p %s ps -a --format "table {{.Names}}%s{{.State}}%s{{.Status}}"', $dockerPrefix, $delimiter, $delimiter);
+
+    $output = [];
+    exec($command, $output);
+
+    if (empty($output)) {
+        Printer::newText("No containers found.")
+               ->setColor(TextColor::RED)
+               ->print();
+        return;
+    }
+
+    if (str_contains($output[0] ?? '', '<no value>')) {
+        $output[0] = str_replace('<no value>', 'NAME', $output[0]);
+    }
+
+    $table = [];
+    foreach ($output as $line) {
+        $table[] = explode($delimiter, $line);
+    }
+
+    $tableString = createTable($table);
+    $tableString = str_replace(
+        ['created', 'running', 'exited', 'paused', 'restarting', 'removing', 'dead', $dockerPrefix],
+        [
+            (string)(Printer::newText('created')->setColor(TextColor::CYAN)),
+            (string)(Printer::newText('running')->setColor(TextColor::GREEN)),
+            (string)(Printer::newText('exited')->setColor(TextColor::RED)),
+            (string)(Printer::newText('paused')->setColor(TextColor::PURPLE)),
+            (string)(Printer::newText('restarting')->setColor(TextColor::PURPLE)),
+            (string)(Printer::newText('removing')->setColor(TextColor::CYAN)),
+            (string)(Printer::newText('dead')->setColor(TextColor::RED)),
+            (string)(Printer::newText($dockerPrefix)->setColor(TextColor::PURPLE)),
+        ],
+        $tableString,
+    );
+    Printer::newText($tableString)->print();
+}
+
 function defaultCommand(): void
 {
     Printer::newText("Warning: You have no chosen any command.")
@@ -102,12 +190,17 @@ if ($action === 'help') {
 }
 
 if ($action === 'errorCommand') {
-    errorCommand($arguments[0]);
+    errorCommand(...$arguments);
     die;
 }
 
 if ($action === 'hello') {
     hello();
+    die;
+}
+
+if ($action === 'status') {
+    status(...$arguments);
     die;
 }
 

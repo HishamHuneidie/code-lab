@@ -39,6 +39,11 @@ restart:
 	${DOCKER_COMPOSE} -p ${DOCKER_PREFIX} restart
 	${DOCKER_COMPOSE} -p ${DOCKER_PREFIX} exec ${DOCKER_MAIN_CONTAINER} bin/make_help hello
 
+# Show containers status
+.PHONY: status
+status:
+	php ./bin/make_help status ${DOCKER_PREFIX}
+
 # Stop containers
 .PHONY: stop
 stop:
@@ -64,12 +69,12 @@ bash:
 db-bash:
 	${DOCKER_COMPOSE} -p ${DOCKER_PREFIX} exec ${DOCKER_DB_CONTAINER} mariadb -u ${DB_USER} -D ${DB_NAME} -p
 
-# Clean cache
+# Clear cache
 .PHONY: composer-clear
 composer-clear:
 	${DOCKER_COMPOSE} -p ${DOCKER_PREFIX} exec ${DOCKER_MAIN_CONTAINER} php bin/console cache:clear
 
-# Install a vendor package
+# Install a composer package
 .PHONY: composer-add
 composer-add:
 	${DOCKER_COMPOSE} -p ${DOCKER_PREFIX} exec ${DOCKER_MAIN_CONTAINER} composer require ${vendor}
