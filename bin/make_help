@@ -12,11 +12,35 @@ $arguments = array_slice($argv, 2);
 
 function createTable(array $table): string
 {
+    $calculatedWidth = function (string $string): int {
+        // Remove all background
+        foreach (BackgroundColor::cases() as $color) {
+            $string = str_replace($color->value, '', $string);
+        }
+        // Remove all colors
+        foreach (TextColor::cases() as $color) {
+            $string = str_replace($color->value, '', $string);
+        }
+
+        return strlen($string);
+    };
+
+    $clearValue = function (string $string): string {
+        return str_replace(
+            array_merge(
+                array_map(fn($color) => $color->value, TextColor::cases()),
+                array_map(fn($color) => $color->value, BackgroundColor::cases()),
+            ),
+            '',
+            $string,
+        );
+    };
+
     // Obtain columns max length
     $lengths = [];
     foreach ($table as $row) {
         foreach ($row as $key => $value) {
-            $lengths[$key] = max($lengths[$key] ?? 0, strlen($value));
+            $lengths[$key] = max($lengths[$key] ?? 0, $calculatedWidth($value));
         }
     }
 
@@ -24,7 +48,10 @@ function createTable(array $table): string
     foreach ($table as $i => $row) {
         foreach ($row as $key => $value) {
             $long = $lengths[$key];
-            $table[$i][$key] = str_pad($value, $long, ' ', STR_PAD_RIGHT);
+            $cleanValue = $clearValue($value);
+            $templateValue = str_pad($cleanValue, $long, ' ', STR_PAD_RIGHT);
+
+            $table[$i][$key] = str_replace($cleanValue, $value, $templateValue);
         }
     }
 
@@ -34,7 +61,7 @@ function createTable(array $table): string
         $lines[] = "| " . implode(' | ', $row) . " |";
     }
 
-    $top = str_pad("", strlen($lines[0]), '-', STR_PAD_RIGHT);
+    $top = str_pad("", $calculatedWidth($lines[0]), '-', STR_PAD_RIGHT);
     array_unshift($lines, $top);
     $lines[] = $top;
 
@@ -55,39 +82,49 @@ function createTable(array $table): string
  */
 function showHelp(): void
 {
-    $allowedCommands = [
-        "build            " => "Build containers and install composer dependencies",
-        "start            " => "Start containers",
-        "restart          " => "Restart containers",
-        "status           " => "Show containers status",
-        "stop             " => "Stop containers",
-        "remove           " => "Remove containers",
-        "logs             " => "Show logs",
-        "bash             " => "Access to the main container terminal",
-        "db-bash          " => "Access to the database container terminal",
-        "composer-clear   " => "Clear cache",
-        "composer-add     " => "Install a composer package (eg: %purple%make composer-add vendor=my-package%fin%)",
-        "npm-add          " => "Install a npm package (eg: %purple%make npm-add package=my-package%fin%)",
-        "tree             " => "Update/Generate directory tree",
+    $header = [
+        ["Command name", "Description"],
     ];
 
-    Printer::newText("\nAllowed commands:")
-           ->setColor(TextColor::GREEN)
-           ->print();
+    foreach ($header as $i => $command) {
+        $header[$i][0] = (string)Printer::newText($command[0])->setColor(TextColor::GREEN);
+        $header[$i][1] = (string)Printer::newText($command[1])->setColor(TextColor::GREEN);
+    }
 
-    foreach ($allowedCommands as $command => $description) {
-        $description = str_replace(
+    $allowedCommands = [
+        ["build", "Build containers and install composer dependencies"],
+        ["start", "Start containers"],
+        ["restart", "Restart containers"],
+        ["status", "Show containers status"],
+        ["stop", "Stop containers"],
+        ["remove", "Remove containers"],
+        ["logs", "Show logs"],
+        ["bash", "Access to the main container terminal"],
+        ["db-bash", "Access to the database container terminal"],
+        ["exec", "Execute command in the main docker container (eg: %purple%make exec command=\"my command --here\"%fin%)"],
+        ["composer-clear", "Clear cache"],
+        ["composer-add", "Install a composer package (eg: %purple%make composer-add vendor=\"my-package\"%fin%)"],
+        ["npm-add", "Install a npm package (eg: %purple%make npm-add package=\"my-package\"%fin%)"],
+        ["tree", "Update/Generate directory tree"],
+    ];
+
+    foreach ($allowedCommands as $i => $command) {
+        $commandName = $command[0];
+        $commandDescription = $command[1];
+        // Colorize command name
+        $allowedCommands[$i][0] = (string)Printer::newText($commandName)->setColor(TextColor::PURPLE);
+        // Colorize description
+        $allowedCommands[$i][1] = str_replace(
             ['%purple%', '%fin%'],
             [TextColor::PURPLE->value, TextColor::CLOSE->value],
-            $description,
+            $commandDescription,
         );
-
-        $coloredCommand = Printer::newText($command)->setColor(TextColor::PURPLE);
-
-        $printedLine = " {$coloredCommand}: {$description}";
-
-        Printer::newText($printedLine)->print();
     }
+
+    $tableInfo = [...$header, ...$allowedCommands];
+    $table = createTable($tableInfo);
+
+    Printer::newText($table)->print();
 }
 
 /**

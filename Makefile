@@ -69,6 +69,11 @@ bash:
 db-bash:
 	${DOCKER_COMPOSE} -p ${DOCKER_PREFIX} exec ${DOCKER_DB_CONTAINER} mariadb -u ${DB_USER} -D ${DB_NAME} -p
 
+# Execute command in the main docker container
+.PHONY: exec
+exec:
+	${DOCKER_COMPOSE} -p ${DOCKER_PREFIX} exec ${DOCKER_MAIN_CONTAINER} ${command}
+
 # Clear cache
 .PHONY: composer-clear
 composer-clear:
