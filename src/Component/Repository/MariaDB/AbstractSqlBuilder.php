@@ -2,6 +2,7 @@
 
 namespace Hisham\CodeLab\Component\Repository\MariaDB;
 
+use BackedEnum;
 use Hisham\CodeLab\Common\Enum\MariaDbTable;
 use ReflectionClass;
 use Stringable;
@@ -29,6 +30,9 @@ abstract class AbstractSqlBuilder implements Stringable
         foreach ($reflectedEntity->getProperties() as $property) {
             $property->setAccessible(true);
             $propertyName = $property->getName();
+            $value = $property->getValue($this->entity);
+
+            if ($this->isCommand() && empty($value)) continue;
 
             $columns[] = $this->columToSnakeCase($propertyName);
         }
@@ -51,8 +55,15 @@ abstract class AbstractSqlBuilder implements Stringable
         $values = [];
         foreach ($reflectedEntity->getProperties() as $property) {
             $property->setAccessible(true);
+            $value = $property->getValue($this->entity);
 
-            $values[] = $property->getValue($this->entity);
+            if ($this->isCommand() && empty($value)) continue;
+
+            if ($value instanceof BackedEnum) {
+                $value = $value->value;
+            }
+
+            $values[] = $value;
         }
 
         return implode(
@@ -87,6 +98,11 @@ abstract class AbstractSqlBuilder implements Stringable
             '_$0',
             lcfirst($column),
         ));
+    }
+
+    private function isCommand(): bool
+    {
+        return $this instanceof CommandBuilder;
     }
 
 }

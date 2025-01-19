@@ -18,7 +18,7 @@ final class CommandBuilder extends AbstractSqlBuilder
         $columns = $this->columns();
         $values = $this->values();
 
-        return "REPLACE INTO `{$this->table}` ({$columns}) values ({$values})";
+        return "REPLACE INTO `{$this->table->value}` ({$columns}) values ({$values})";
     }
 
 }
