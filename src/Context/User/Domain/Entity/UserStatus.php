@@ -9,6 +9,6 @@ enum UserStatus: string
     use EnumTrait;
 
     case ACTIVE  = 'ACTIVE';
-    case BLOCKED = 'BLOCKED';
+    case PAUSED  = 'PAUSED';
     case DELETED = 'DELETED';
 }

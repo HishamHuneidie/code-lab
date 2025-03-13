@@ -10,7 +10,6 @@ use Hisham\CodeLab\Context\User\Application\Dto\UserDto;
 final class SaveUserCommand
 {
     public function __construct(
-        public ?string $id,
         public UserDto $user,
     ) {}
 }

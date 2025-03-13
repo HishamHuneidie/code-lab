@@ -26,6 +26,10 @@
     </section>
 {% endblock %}
 
+{% block modals %}
+    {% include 'context/user/_partials/modal-user-viewer.html.twig' %}
+{% endblock %}
+
 {% block js %}
     {{ encore_entry_script_tags('script/user') }}
 {% endblock %}

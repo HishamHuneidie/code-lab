@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/watch', name: 'api.watch.rfcs')]
 class RfcController extends AbstractController
 {
-    #[Route('/{pathname}')]
+    #[Route('/{pathname}', name: 'findByPathname', methods: ['GET'])]
     public function get(string $pathname, GetRfcByPathname $getRfcByPathname): JsonResponse
     {
         try {

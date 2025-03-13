@@ -32,7 +32,9 @@ final class UserDtoMapper extends AbstractDtoMapper
                 email    : $dto->email,
                 password : $dto->password,
                 status   : UserStatus::fromName($dto->status),
-                createdAt: new DateTime($dto->createdAt),
+                createdAt: !$dto->createdAt
+                    ? null
+                    : new DateTime($dto->createdAt),
             );
         } catch (Throwable $e) {
             throw new DtoMapperException('Error mapping UserDto -> User');
@@ -53,7 +55,9 @@ final class UserDtoMapper extends AbstractDtoMapper
                 email    : $entity->getEmail(),
                 password : $entity->getPassword(),
                 status   : $entity->getStatus()->value,
-                createdAt: $entity->getCreatedAt()->format(GlobalConfig::DATE_FORMAT_DEFAULT),
+                createdAt: $entity->getCreatedAt() instanceof DateTime
+                    ? $entity->getCreatedAt()->format(GlobalConfig::DATE_FORMAT_DEFAULT)
+                    : null,
             );
         } catch (Throwable $e) {
             throw new DtoMapperException('Error mapping User -> UserDto');

@@ -17,6 +17,26 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/users', name: 'user.')]
 final class UserController extends AbstractController
 {
+//    #[Route('/', name: 'findAll', methods: ['GET'])]
+//    public function list(UserList $userList): Response
+//    {
+//        try {
+//            $users = $userList->execute();
+//        } catch (RepositoryException $e) {
+//            return $this->json(['errors repository']);
+//        } catch (ValueObjectException $e) {
+//            return $this->json(['errors value object']);
+//        } catch (DtoMapperException $e) {
+//            return $this->json(['errors mapper']);
+//        }
+//
+//        return $this->render('context/user/users.html.twig', [
+//            'users' => $users,
+//        ]);
+//    }
+
+
+
     #[Route('/', name: 'findAll', methods: ['GET'])]
     public function list(UserList $userList): Response
     {

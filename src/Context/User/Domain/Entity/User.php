@@ -2,9 +2,9 @@
 
 namespace Hisham\CodeLab\Context\User\Domain\Entity;
 
+use DateTime;
 use Hisham\CodeLab\Common\Util\GetterSetterTrait;
 use Hisham\CodeLab\Common\ValueObject\IdVo;
-use DateTime;
 
 /**
  * Entity User. Used in repositories
@@ -32,6 +32,15 @@ class User
         private string     $email,
         private string     $password,
         private UserStatus $status,
-        private DateTime   $createdAt,
+        private ?DateTime  $createdAt,
     ) {}
+
+    // TODO: Create a factory for this
+    public static function newEmpty(): self
+    {
+        return new self(
+            null, '', '', '', UserStatus::ACTIVE, null,
+        );
+    }
+
 }

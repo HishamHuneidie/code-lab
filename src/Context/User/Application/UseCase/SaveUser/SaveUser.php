@@ -4,7 +4,6 @@ namespace Hisham\CodeLab\Context\User\Application\UseCase\SaveUser;
 
 use Hisham\CodeLab\Common\Mapper\DtoMapperException;
 use Hisham\CodeLab\Common\Repository\RepositoryException;
-use Hisham\CodeLab\Common\ValueObject\IdVo;
 use Hisham\CodeLab\Common\ValueObject\ValueObjectException;
 use Hisham\CodeLab\Component\Mapper\DtoMapperInterface;
 use Hisham\CodeLab\Context\User\Application\Mapper\UserDtoMapper;
@@ -34,10 +33,6 @@ final readonly class SaveUser
     public function execute(SaveUserCommand $command): void
     {
         $user = $this->mapper->toEntity($command->user);
-
-        $id = !$command->id ? null : new IdVo($command->id);
-
-        $user->setId($id);
 
         $this->repository->save($user);
     }
