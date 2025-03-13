@@ -41,7 +41,7 @@ final class UserController extends AbstractController
     public function list(UserList $userList): Response
     {
         try {
-            $users = $userList->execute();
+            $user = $userById->execute($id);
         } catch (RepositoryException $e) {
             return $this->json(['errors repository']);
         } catch (ValueObjectException $e) {
@@ -50,8 +50,8 @@ final class UserController extends AbstractController
             return $this->json(['errors mapper']);
         }
 
-        return $this->render('context/user/users.html.twig', [
-            'users' => $users,
+        return $this->render('context/user/user.html.twig', [
+            'user' => $user,
         ]);
     }
 

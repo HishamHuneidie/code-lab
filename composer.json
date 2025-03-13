@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": "8.2.*",
+        "php": "8.*",
         "ext-pdo": "*",
         "symfony/framework-bundle": "^7.2",
         "symfony/dotenv": "^7.2",
